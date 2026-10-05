@@ -45,4 +45,4 @@ As informações são consumidas através de requisições HTTP e processadas pe
 ### 1. Clone o repositório
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone <https://github.com/JorgeMassaru/pokedex_python>
