@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Tabela Pokémon</h1>
+<form action="{{url_for('pokemon')}}" method="POST">
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome Pokémon</label>
+        <input type="text" class="form-control" id="pokemon_name" name="nome" required>
+    </div>
+    <div class="mb-3">
+        <label for="tipo" class="form-label">Tipo Pokémon</label>
+        <input type="text" class="form-control" id="pokemon_type" name="tipo" required>
+    </div>
+    <div class="mb-3">
+        <label for="geracao" class="form-label">Geração Pokémon</label>
+        <input type="text" class="form-control" id="geracao" name="geracao" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Adicionar Pokémon</button>
+</form>
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Geração</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pokemon in pokemon_page %}
+        <tr>
+            <td>{{ pokemon.nome }}</td>
+            <td>{{ pokemon.tipo }}</td>
+            <td>{{ pokemon.geracao }}</td>
+            <td>
+                <a href="{{ url_for('editar_pokemon', id=pokemon.id) }}" class="btn btn-warning">Editar</a>
+                <a href="{{ url_for('pokemon', id=pokemon.id) }}" class="btn btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>API Pokémon</h1>
+{% if pokemons %}
+<div class="row">
+    {% for pokemon in pokemons %}
+    <div class="col-md-2 mb-3">
+        <div class="card" >
+            <img src="{{ pokemon.image }}" class="card-img-top" alt="{{ pokemon.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ pokemon.name | capitalize }}</h5>
+                <p class="card-text">
+                    <strong>Tipos:</strong>
+                    {% for type in pokemon.types %}
+                    <img src="{{ url_for('static', filename='img/icons/' + type + '.svg') }}" alt="{{ type }}" title="{{ type | capitalize }}" width="30" height="30">
+                    {% endfor %}
+                    <br>
+                    <strong>Altura:</strong> {{ pokemon.height }} m<br>
+                    <strong>Peso:</strong> {{ pokemon.weight }} kg<br>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Controles de paginação -->
+<nav aria-label="Navegação de páginas">
+    <ul class="pagination justify-content-center">
+        {% if prev_offset is not none %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('api_pokemon', offset=prev_offset) }}" aria-label="Anterior">
+                <span aria-hidden="true">&laquo; Anterior</span>
+            </a>
+        </li>
+        {% endif %}
+        {% if next_offset is not none %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('api_pokemon', offset=next_offset) }}" aria-label="Próximo">
+                <span aria-hidden="true">Próximo &raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% else %}
+<div class="alert alert-warning" role="alert">
+    Nenhum Pokémon foi encontrado. Tente novamente mais tarde.
+</div>
+{% endif %}
+{% endblock %}

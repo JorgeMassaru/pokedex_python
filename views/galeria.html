@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 700; color: #2c3e50;">
+        Galeria de Imagens Pokemon
+    </h1>
+
+    <!-- Mensagens Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} text-center mb-4" style="font-size: 1.1rem;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endwith %}
+
+    <!-- Grade de Imagens -->
+    <div class="row g-4 justify-content-center">
+        {% for img in imagens %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 border-0 shadow-lg rounded-4">
+                <img src="/static/uploads/{{ img.filename }}" class="card-img-top img-fluid rounded-top" alt="Imagem da Galeria" style="object-fit: cover; height: 200px;">
+                <div class="card-body text-center">
+                    <p class="card-text text-muted mb-0"><strong>{{ img.filename }}</strong></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Formulário de Envio de Imagem -->
+    <div class="mt-5">
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+            <div class="card-body">
+                <h4 class="text-center mb-4" style="color: #2c3e50;">Envie uma nova imagem</h4>
+                <form action="{{ url_for('galeria') }}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label fw-semibold" style="font-size: 1.1rem; color: #34495e;">Escolha um arquivo de imagem:</label>
+                        <input class="form-control form-control-lg" name="file" type="file" required />
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-5" style="font-weight: 600;">Enviar Imagem</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

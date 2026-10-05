@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="pokedex-container">
+
+    <div class="pokedex-header">
+        <div class="pokedex-light"></div>
+
+        <h1>Pokédex</h1>
+
+        <p>
+            Pesquise um Pokémon pelo nome ou número
+        </p>
+
+        <form method="POST" class="pokemon-search">
+            <input type="text" name="pokemon_name" placeholder="Ex: Pikachu ou 25" autocomplete="off" required>
+
+            <button type="submit">
+                Pesquisar
+            </button>
+        </form>
+    </div>
+
+
+    {% if error %}
+
+    <div class="pokemon-error">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    {% if pokemon %}
+
+    <div class="pokemon-card">
+
+        <div class="pokemon-top">
+
+            <span class="pokemon-number">
+                #{{ "%03d"|format(pokemon.id) }}
+            </span>
+
+            <h2>
+                {{ pokemon.name|capitalize }}
+            </h2>
+
+        </div>
+
+
+        <div class="pokemon-main">
+
+            <div class="pokemon-image-container">
+                <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}" class="pokemon-image">
+            </div>
+
+
+            <div class="pokemon-info">
+
+                <div class="pokemon-types">
+
+                    {% for type in pokemon.types %}
+
+                    <span class="type type-{{ type }}">
+                        {{ type|capitalize }}
+                    </span>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="pokemon-details">
+
+                    <div>
+                        <strong>Altura</strong>
+                        <span>{{ pokemon.height }} m</span>
+                    </div>
+
+                    <div>
+                        <strong>Peso</strong>
+                        <span>{{ pokemon.weight }} kg</span>
+                    </div>
+
+                    <div>
+                        <strong>Experiência</strong>
+                        <span>{{ pokemon.base_experience }} XP</span>
+                    </div>
+
+                </div>
+
+
+                <div class="pokemon-section">
+
+                    <h3>Habilidades</h3>
+
+                    <div class="abilities">
+
+                        {% for ability in pokemon.abilities %}
+
+                        <span>
+                            {{ ability|replace('-', ' ')|title }}
+                        </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="pokemon-stats">
+
+            <h3>Status</h3>
+
+            {% for stat in pokemon.stats %}
+
+            <div class="stat">
+
+                <div class="stat-header">
+
+                    <span>
+                        {{ stat.name|replace('-', ' ')|title }}
+                    </span>
+
+                    <strong>
+                        {{ stat.value }}
+                    </strong>
+
+                </div>
+
+                <div class="stat-bar">
+
+                    <div class="stat-value" style="width: {{ [stat.value, 100]|min }}%;"></div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
