@@ -31,7 +31,6 @@ A aplicação permite consultar informações de Pokémon através da PokeAPI, a
 - SQLite
 - HTML
 - CSS
-- JavaScript
 - PokeAPI
 
 ## API utilizada
